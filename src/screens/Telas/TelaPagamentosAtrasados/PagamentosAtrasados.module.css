@@ -1,0 +1,115 @@
+/* ==========================================================================
+   Container principal das parcelas
+   ========================================================================== */
+.parcelasBox {
+  flex: 1 1 auto;
+  min-height: 0;
+  min-width: 280px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background: var(--bg-color);
+  border-radius: 12px;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.05);
+  flex-wrap: nowrap;
+}
+
+/* ==========================================================================
+   Cartão individual da parcela
+   ========================================================================== */
+.parcelaCard {
+  background-color: var(--sidebar-bg);
+  border: 1px solid var(--text-color);
+  border-left: 6px solid var(--text-color);
+  border-radius: 12px;
+  padding: 18px 24px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  max-width: 100%;
+  min-width: 280px;
+  min-height: 100px;
+  box-sizing: border-box;
+  word-wrap: break-word;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+.parcelaCard p {
+  margin: 4px 0;
+  font-size: 15px;
+  color: var(--text-color);
+}
+
+.botaoStatus {
+  margin-top: 10px;
+  padding: 10px 16px;
+  background-color: var(--text-color);
+  color: var(--bg-color);
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.statusAtrasada {
+  color: #d32f2f;
+  font-weight: 700;
+}
+
+/* ==========================================================================
+   Estados interativos para hover e active
+   ========================================================================== */
+@media (hover: hover) and (pointer: fine) {
+  .parcelaCard:hover {
+    background-color: var(--hover-bg);
+    transform: translateY(-0.5px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  }
+  .botaoStatus:hover {
+    background-color: var(--button-hover);
+  }
+}
+
+.parcelaCard:active {
+  background-color: var(--hover-bg);
+  transform: translateY(-0.5px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.botaoStatus:active {
+  background-color: var(--button-hover);
+}
+
+/* ==========================================================================
+   RESPONSIVIDADE
+   ========================================================================== */
+
+/* Ajusta tamanho do card para telas menores que 1024px (tablets, laptops menores) */
+@media (max-width: 1024px) {
+  .parcelaCard {
+    padding: 16px 20px;
+  }
+  .parcelaCard p {
+    font-size: 14px;
+  }
+}
+
+/* Para telas muito pequenas, como celulares bem estreitos (310px de largura) */
+@media (max-width: 310px) {
+  .parcelasBox {
+    min-width: 200px;   
+    padding: 8px;       
+  }
+  .parcelaCard {
+    padding: 10px 12px;
+    min-width: 200px;   
+    min-height: 80px;   
+  }
+  .parcelaCard p {
+    font-size: 11px;
+  }
+}

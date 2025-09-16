@@ -1,0 +1,850 @@
+/* ==============================
+   Container principal e layout geral
+   ============================== */
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+/* ==============================
+   Barra de filtros (input e botão)
+   ============================== */
+.filtros {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 10px;
+  flex-wrap: nowrap;
+  align-items: center;
+}
+
+/* Campo de busca */
+.inputBusca {
+  padding: 10px 14px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background-color: var(--hover-bg);
+  color: var(--text-color);
+  font-size: 1rem;
+  flex: 1;
+  width: auto;
+  flex-shrink: 1;
+  transition: border 0.2s ease, box-shadow 0.2s ease;
+}
+
+.inputBusca:focus {
+  outline: none;
+  border: 1px solid var(--text-color);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--text-color) 60%, transparent);
+}
+
+/* Botão novo */
+.botaoNovo {
+  background-color: #22c55e;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 16px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.1s;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.botaoNovo:active {
+  background-color: #16a34a;
+  transform: scale(0.98);
+}
+
+/* ==============================
+   Wrapper da tabela e estilos da tabela
+   ============================== */
+.tabelaWrapper {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: auto;
+  background-color: var(--sidebar-bg);
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+}
+
+.tabela {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: var(--sidebar-bg);
+  overflow: auto;
+}
+
+.tabela thead {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background-color: var(--sidebar-bg);
+}
+
+.tabela th,
+.tabela td {
+  padding: 18px;
+  border-bottom: 1px solid #333;
+  color: var(--text-color);
+  vertical-align: middle;
+  word-wrap: break-word;
+}
+
+.tabela th {
+  background-color: var(--sidebar-bg);
+}
+
+.tabela th:nth-child(1),
+.tabela td:nth-child(1) {
+  text-align: left;
+  width: 0%;
+}
+
+.tabela th:nth-child(2),
+.tabela td:nth-child(2) {
+  text-align: center;
+  width: 30%;
+}
+
+/* Linha da tabela interativa */
+.tabelaRow {
+  cursor: pointer;
+}
+
+.tabelaRow:active {
+  background-color: var(--hover-bg);
+}
+
+/* ==============================
+   Botões de ação (Excluir, Editar, Salvar, Cancelar)
+   ============================== */
+
+/* Botão excluir */
+.botaoExcluir {
+  background: linear-gradient(135deg, #ef4444, #b91c1c);
+  color: white;
+  border: none;
+  padding: 12px 22px;
+  border-radius: 14px;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 1rem;
+  box-shadow: 0 8px 16px rgba(239, 68, 68, 0.5);
+  transition: background 0.3s ease, box-shadow 0.3s ease, transform 0.1s ease;
+}
+
+.botaoExcluir:active {
+  transform: scale(0.98);
+  box-shadow: 0 2px 5px rgba(239, 68, 68, 0.5);
+}
+
+.botaoEditar {
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  color: white;
+  border: none;
+  padding: 12px 22px;
+  border-radius: 14px;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 1rem;
+  box-shadow: 0 8px 16px rgba(59, 130, 246, 0.5);
+  transition: background 0.3s ease, box-shadow 0.3s ease, transform 0.1s ease;
+}
+
+.botaoEditar:active {
+  transform: scale(0.98);
+  box-shadow: 0 2px 5px rgba(59, 130, 246, 0.5);
+}
+
+.botaoSalvar {
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  color: white;
+  border: none;
+  padding: 12px 22px;
+  border-radius: 14px;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 1rem;
+  box-shadow: 0 8px 16px rgba(34, 197, 94, 0.5);
+  transition: background 0.3s ease, box-shadow 0.3s ease, transform 0.1s ease;
+}
+
+.botaoSalvar:active {
+  transform: scale(0.98);
+  box-shadow: 0 2px 5px rgba(34, 197, 94, 0.5);
+}
+
+.botaoCancelar {
+  background: linear-gradient(135deg, #ef4444, #b91c1c);
+  color: white;
+  border: none;
+  padding: 12px 22px;
+  border-radius: 14px;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 1rem;
+  box-shadow: 0 8px 16px rgba(239, 68, 68, 0.5);
+  transition: background 0.3s ease, box-shadow 0.3s ease, transform 0.1s ease;
+}
+
+.botaoCancelar:active {
+  transform: scale(0.98);
+  box-shadow: 0 2px 5px rgba(239, 68, 68, 0.5);
+}
+
+/* ==============================
+   Mensagem "Não encontrado"
+   ============================== */
+.notFound {
+  text-align: center;
+  font-size: 1rem;
+  color: #aaa;
+  padding: 10px;
+}
+
+/* =======================
+   Avisos sobre clique 
+
+   FALTA FAZER ISSO EM CLIENTES, EMPRESTIMOSPAGOS E CONFIGURACOES
+   ======================= */
+
+.clienteClicavel {
+  cursor: pointer;
+  transition: color 0.2s ease;
+  text-align: center;
+}
+
+.clienteClicavel:active {
+  color: var(--sidebar-bg);
+  text-decoration: underline;
+}
+
+.avisocliente {
+  color: #aaa;
+  font-size: 1rem;
+  margin-bottom: 8px;
+  margin-left: 12px;
+}
+
+/* ==============================
+   Modal (sobreposição, conteúdo e botões)
+   ============================== */
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.45);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  backdrop-filter: blur(4px);
+  pointer-events: auto;
+}
+
+.modalContent {
+  background-color: var(--sidebar-bg);
+  padding: 2.5rem 2rem 2rem 2rem;
+  border-radius: 16px;
+  width: 95%;
+  max-width: 480px;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.25);
+  color: var(--text-color);
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  display: flex;
+  flex-direction: column;
+  pointer-events: auto;
+}
+
+.modalTitle,
+.modalTitlevisualização {
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  color: var(--text-color);
+  letter-spacing: 0.05em;
+}
+
+.modalTitle {
+  text-align: center;
+}
+
+.modalTitlevisualização {
+  text-align: left;
+}
+
+/* Formulário dentro do modal */
+.formModal label {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1.25rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--text-color);
+}
+
+.formModal input,
+.formModal select {
+  margin-top: 8px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  border: 1.5px solid var(--hover-bg);
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  font-size: 1rem;
+  transition: border-color 0.3s, box-shadow 0.3s;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  box-shadow: inset 0 0 6px rgba(255 255 255 / 0.05);
+}
+
+.formModal input::placeholder,
+.formModal select::placeholder {
+  color: var(--hover-bg);
+  font-style: italic;
+  font-weight: 400;
+}
+
+.formModal input:focus,
+.formModal select:focus {
+  outline: none;
+  border-color: var(--text-color);
+  box-shadow: 0 0 8px var(--text-color);
+}
+
+/* Botões do modal */
+.botoesModal {
+  display: flex;
+  justify-content: flex-end;
+  gap: 14px;
+  margin-top: 2rem;
+}
+
+/* Botão fechar modal */
+.closeButton {
+  position: absolute;
+  top: 12px;
+  right: 18px;
+  background: transparent;
+  border: none;
+  font-size: 40px;
+  font-weight: bold;
+  cursor: pointer;
+  color: var(--text-color);
+  padding: 0;
+  transition: color 0.2s ease;
+}
+
+.closeButton:hover {
+  color: #ff0000;
+}
+
+/* ==============================
+   Input senha com botão toggle
+   ============================== */
+.inputSenhaWrapper {
+  display: flex;
+  align-items: center;
+}
+
+.inputSenhaWrapper input {
+  flex: 1;
+}
+
+.toggleSenha {
+  background: none;
+  border: none;
+  margin-left: 0.5rem;
+  cursor: pointer;
+  font-size: 1.2rem;
+  color: #555;
+  display: flex;
+  align-items: center;
+}
+
+/* ==============================
+   Info container (exibir dados em blocos)
+   ============================== */
+.infoContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 20px;
+  border-radius: 12px;
+  background-color: var(--sidebar-bg);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  margin-bottom: 24px;
+  transition: background-color 0.3s ease;
+}
+
+.infoItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text-color);
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--hover-bg);
+}
+
+.infoItem:last-child {
+  border-bottom: none;
+}
+
+.label {
+  color: var(--text-color);
+  font-weight: 600;
+  opacity: 0.8;
+}
+
+.value {
+  color: var(--text-color);
+  font-weight: 500;
+}
+
+/* ==============================
+   Media queries responsivos
+   ============================== */
+
+/* Telas até 600px */
+@media (max-width: 600px) {
+
+  .tabela th,
+  .tabela td {
+    padding: 18px;
+    font-size: 14px;
+  }
+
+  .botaoEditar,
+  .botaoExcluir {
+    padding: 4px 8px;
+    font-size: 0.8rem;
+  }
+
+  .filtros {
+    flex-wrap: nowrap;
+    gap: 10px;
+  }
+
+  .inputBusca {
+    font-size: 0.9rem;
+    padding: 8px;
+    min-width: 0;
+  }
+
+  .botaoNovo {
+    font-size: 0.8rem;
+    padding: 8px 12px;
+  }
+}
+
+/* Telas até 800px, alta resolução e dispositivos com hover e ponteiro fino (ex: desktops retina) */
+@media screen and (max-width: 800px) and (min-resolution: 2dppx) and (hover: hover) and (pointer: fine) {
+  .container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    box-sizing: border-box;
+  }
+
+  .filtros {
+    flex-wrap: nowrap;
+    gap: 10px;
+  }
+
+  .botaoEditar,
+  .botaoExcluir {
+    padding: 6px 10px;
+    font-size: 0.75rem;
+    display: inline-block;
+    margin-top: 10px;
+  }
+
+  .tabela td:nth-child(3) {
+    white-space: nowrap;
+  }
+
+  .inputBusca {
+    padding: 5px 10px;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    background-color: var(--hover-bg);
+    color: var(--text-color);
+    font-size: 1rem;
+    flex: 1;
+    min-width: 0;
+    transition: border 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .botaoNovo {
+    background-color: #22c55e;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+}
+
+/* Telas até 500px, alta resolução e dispositivos com hover e ponteiro fino (ex: celulares retina) */
+@media screen and (max-width: 500px) and (min-resolution: 2.5dppx) and (hover: hover) and (pointer: fine) {
+  .container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    box-sizing: border-box;
+  }
+
+  .tabelaWrapper {
+    flex: none;
+    height: 105%;
+    overflow-y: auto;
+    overflow-x: auto;
+    background-color: var(--sidebar-bg);
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+  }
+
+  .tabela {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: var(--sidebar-bg);
+    overflow: auto;
+  }
+
+  .tabela th {
+    background-color: var(--sidebar-bg);
+    font-size: 0.4rem;
+  }
+
+  .filtros {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 5px;
+    flex-wrap: nowrap;
+  }
+
+  .botaoEditar,
+  .botaoExcluir {
+    padding: 6px 10px;
+    font-size: 0.75rem;
+    display: inline-block;
+  }
+
+  .tabela td:nth-child(3) {
+    white-space: nowrap;
+  }
+
+  .inputBusca {
+    margin-top: -12px;
+    height: 15px;
+    padding: 0 5px;
+    font-size: 0.4rem;
+    line-height: 1;
+    border-radius: 4px;
+    background-color: var(--hover-bg);
+    color: var(--text-color);
+    border: 1px solid transparent;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .botaoNovo {
+    background-color: #22c55e;
+    color: white;
+    margin-top: -12px;
+    border: none;
+    border-radius: 4px;
+    height: 15px;
+    padding: 0 8px;
+    font-size: 0.4rem;
+    line-height: 1;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+}
+
+/* Modal responsivo */
+@media (max-width: 480px) {
+  .modalContent {
+    padding: 1.5rem 1.2rem 1.5rem 1.2rem;
+    width: 95%;
+  }
+
+  .botaoSalvar,
+  .botaoCancelar {
+    padding: 10px 18px;
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 412px) {
+  .modalTitlevisualização {
+    font-size: 1.4rem;
+  }
+}
+
+@media (max-width: 365px) {
+  .modalTitlevisualização {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 350px) {
+  .modalContent {
+    padding: 1.5rem 1.2rem 1.5rem 1.2rem;
+    width: 95%;
+  }
+
+  .botaoNovo {
+    font-size: 0.8rem;
+    padding: 8px 8px;
+  }
+
+  .botoesModal {
+    display: flex;
+    justify-content: flex-end;
+    gap: 2px;
+    margin-top: 2rem;
+  }
+
+  .botaoEditar {
+    padding: 8px 12px;
+    font-size: 0.7rem;
+  }
+
+  .botaoSalvar {
+    padding: 8px 12px;
+    font-size: 0.7rem;
+  }
+
+  .botaoExcluir {
+    padding: 8px 12px;
+    font-size: 0.7rem;
+  }
+}
+
+@media (max-height: 720px) {
+  .modalContent {
+    max-height: 95vh;
+    overflow-y: auto;
+  }
+}
+
+/* zoom 250% pra navegador desktop*/
+
+@media (min-resolution: 2.5dppx) and (hover: hover) and (pointer: fine) {
+
+  /* ────────────────────────────── */
+  /*     BARRA DE FILTROS           */
+  /* ────────────────────────────── */
+
+  .filtros {
+    display: flex;
+    gap: 5px;
+    margin-bottom: 5px;
+    flex-wrap: nowrap;
+    align-items: center;
+  }
+
+  .inputBusca {
+    padding: 5px 12px;
+    border: 1px solid transparent;
+    border-radius: 5px;
+    background-color: var(--hover-bg);
+    color: var(--text-color);
+    flex: 1;
+    font-size: 0.4rem;
+    width: auto;
+    flex-shrink: 1;
+    transition: border 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .inputBusca:focus {
+    outline: none;
+    border: 1px solid var(--text-color);
+    box-shadow: 0 0 0 1px color-mix(in srgb, var(--text-color) 60%, transparent);
+  }
+
+  .botaoNovo {
+    background-color: #22c55e;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 12px;
+    cursor: pointer;
+    font-size: 0.4rem;
+    transition: background-color 0.3s, transform 0.1s;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .botaoNovo:active {
+    background-color: #16a34a;
+    transform: scale(0.98);
+  }
+
+  /* ────────────────────────────── */
+  /*           TABELA              */
+  /* ────────────────────────────── */
+
+  .tabelaWrapper {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: auto;
+    background-color: var(--sidebar-bg);
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+  }
+
+  .tabela {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: var(--sidebar-bg);
+    overflow: auto;
+  }
+
+  .tabela thead {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    background-color: var(--sidebar-bg);
+  }
+
+  .tabela th {
+    padding: 5px 12px;
+    border-bottom: 1px solid #333;
+    color: var(--text-color);
+    vertical-align: middle;
+    word-wrap: break-word;
+    font-size: 0.7rem;
+  }
+
+  .tabela td {
+    padding: 5px 12px;
+    border-bottom: 1px solid #333;
+    color: var(--text-color);
+    vertical-align: middle;
+    word-wrap: break-word;
+    font-size: 0.7rem;
+  }
+
+  .avisocliente {
+    color: #aaa;
+    font-size: 0.5rem;
+    margin-bottom: 8px;
+    margin-left: 12px;
+  }
+}
+
+/* zoom 400% para navegador desktop */
+@media (min-resolution: 4dppx) and (hover: hover) and (pointer: fine) {
+
+  .container {
+    height: 100dvh;
+  }
+
+  .filtros {
+    flex-wrap: nowrap;
+    gap: 10px;
+  }
+
+  /* ────────────────────────────── */
+  /*           TABELA              */
+  /* ────────────────────────────── */
+
+  .tabelaWrapper {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: auto;
+    background-color: var(--sidebar-bg);
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+  }
+
+  .tabela {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: var(--sidebar-bg);
+    overflow: auto;
+  }
+
+  .tabela thead {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    background-color: var(--sidebar-bg);
+  }
+
+  .tabela th {
+    padding: 3px 8px;
+    border-bottom: 1px solid #333;
+    color: var(--text-color);
+    vertical-align: middle;
+    word-wrap: break-word;
+    font-size: 0.7rem;
+  }
+
+  .tabela td {
+    padding: 3px 8px;
+    border-bottom: 1px solid #333;
+    color: var(--text-color);
+    vertical-align: middle;
+    word-wrap: break-word;
+    font-size: 0.7rem;
+  }
+
+  .avisocliente {
+    color: #aaa;
+    font-size: 0.4rem;
+    margin-left: 12px;
+  }
+}
+
+/* ==============================
+   Hover states para dispositivos com suporte a hover e ponteiro fino
+   ============================== */
+@media (hover: hover) and (pointer: fine) {
+  .botaoNovo:hover {
+    background-color: #16a34a;
+  }
+
+  .tabelaRow:hover {
+    background-color: var(--hover-bg);
+  }
+
+  .botaoEditar:hover {
+    background: linear-gradient(135deg, #194996, #2563eb);
+    box-shadow: 0 10px 20px rgba(59, 130, 246, 0.7);
+  }
+
+  .botaoExcluir:hover {
+    background: linear-gradient(135deg, #b91c1c, #991b1b);
+    box-shadow: 0 10px 20px rgba(185, 28, 28, 0.7);
+  }
+
+  .botaoSalvar:hover {
+    background: linear-gradient(135deg, #16a34a, #15803d);
+    box-shadow: 0 10px 20px rgba(22, 163, 74, 0.7);
+  }
+
+  .botaoCancelar:hover {
+    background: linear-gradient(135deg, #b91c1c, #991b1b);
+    box-shadow: 0 10px 20px rgba(185, 28, 28, 0.7);
+  }
+
+  .clienteClicavel:hover {
+    color: var(--sidebar-bg);
+    text-decoration: underline;
+  }
+}

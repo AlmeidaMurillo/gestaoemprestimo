@@ -1,0 +1,213 @@
+/* ==========================================================================
+   Fonte principal importada
+   ========================================================================== */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+/* ==========================================================================
+   Container geral do login - centraliza tudo na tela, fundo escuro
+   ========================================================================== */
+.loginContainer {
+  background: #222;
+  min-height: 100dvh;  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  flex-direction: column;
+  position: relative;
+  overflow-y: auto;   
+}
+
+/* ==========================================================================
+   Box principal do login (formulário)
+   ========================================================================== */
+.loginBox {
+  background-color: #2c2f33;
+  padding: 40px;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  width: 100%;
+  max-width: 400px; 
+  color: #fff;
+  text-align: center;
+  transition: all 0.3s ease-in-out;
+}
+
+/* ==========================================================================
+   Títulos e textos da tela de login
+   ========================================================================== */
+.title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #ffffff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  margin-bottom: 10px;
+}
+
+.soubtitle {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #ccc;
+  margin-top: -15px;
+  margin-bottom: 10px;
+}
+
+.subtitle {
+  font-size: 0.95rem;
+  font-weight: 400;
+  color: #aaa;
+  margin-bottom: 30px;
+}
+
+/* ==========================================================================
+   Formulário e inputs
+   ========================================================================== */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+}
+
+.inputWrapper {
+  position: relative;
+}
+
+.inputIcon {
+  position: absolute;
+  top: 50%;
+  left: 15px;
+  transform: translateY(-50%);
+  color: #aaa;
+  font-size: 1rem;
+}
+
+.input {
+  width: 100%;
+  padding: 12px 12px 12px 40px; 
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  background-color: #3b3f45;
+  color: #fff;
+}
+
+.input:focus {
+  outline: 2px solid #7289da;
+}
+
+.iconeOlho {
+  position: absolute;
+  top: 50%;
+  right: 15px;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #aaa;
+  font-size: 1rem;
+}
+
+.iconeOlho:hover {
+  color: #fff;
+}
+
+/* ==========================================================================
+   Botão de login
+   ========================================================================== */
+.button {
+  padding: 14px;
+  border: none;
+  border-radius: 8px;
+  background-color: #5865f2;
+  color: #fff;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.button:hover {
+  background-color: #4752c4;
+  transform: scale(1.03);
+}
+
+/* ==========================================================================
+   Classe para ajuste quando teclado aberto em mobile (ex: React Native Web)
+   ========================================================================== */
+.keyboardOpen {
+  padding-top: 80px; 
+  transition: padding-top 0.3s ease;
+}
+
+/* ==========================================================================
+   Mensagem de erro
+   ========================================================================== */
+.errorMsg {
+  color: #ff6b6b;
+  margin-top: 10px;
+  font-size: 0.9rem;
+}
+
+/* ==========================================================================
+   Rodapé da tela
+   ========================================================================== */
+.footer {
+  margin-top: 30px;
+  width: 100%;
+  text-align: center;
+  color: #ccc;
+  font-size: 0.85rem;
+}
+
+.rights {
+  margin: 0;
+  line-height: 1.5;
+}
+
+.rights strong {
+  color: #ffffff;
+}
+
+/* ==========================================================================
+   RESPONSIVIDADE
+   ========================================================================== */
+
+/* Ajuste para telas menores que 480px — tablets e celulares grandes */
+@media (max-width: 480px) {
+  .loginBox {
+    padding: 30px 20px; 
+  }
+
+  .title {
+    font-size: 1.6rem; 
+  }
+
+  .soubtitle {
+    font-size: 0.95rem;
+  }
+
+  .subtitle {
+    font-size: 0.85rem;
+  }
+
+  .button {
+    font-size: 0.95rem;
+  }
+}
+
+/* Ajustes para telas muito pequenas, abaixo de 320px — celulares pequenos */
+@media (max-width: 320px) {
+  .title {
+    font-size: 1.4rem; 
+  }
+
+  .input {
+    font-size: 0.95rem;
+    padding: 10px 10px 10px 35px;
+  }
+
+  .button {
+    font-size: 0.9rem;
+    padding: 12px; 
+  }
+}

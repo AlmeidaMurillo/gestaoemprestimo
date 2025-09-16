@@ -1,0 +1,128 @@
+/* =======================
+   Grid principal e caixas
+   ======================= */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+  padding: 24px;
+  height: auto;
+  box-sizing: border-box;
+}
+
+.caixa {
+  background: linear-gradient(145deg, #ffffff, #f0f0f0);
+  border-radius: 20px;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.08);
+  text-align: left;
+  padding: 20px;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 160px;
+  cursor: pointer;
+  border: 1px solid #e0e0e0;
+}
+
+.caixa h3 {
+  font-size: 16px;
+  color: #444;
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+
+.caixa p {
+  font-size: 24px;
+  font-weight: 700;
+  color: #222;
+  margin: 0;
+}
+
+/* Inputs e botões */
+.input {
+  padding: 10px;
+  font-size: 14px;
+  border-radius: 8px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  width: 100%;
+  box-sizing: border-box;
+  outline: none;
+  transition: 0.2s;
+}
+
+.input:focus {
+  border-color: #222;
+  box-shadow: 0 0 4px rgba(222, 222, 222, 0.25);
+}
+
+.botao {
+  padding: 10px;
+  background: #222;
+  color: #fff;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  width: 100%;
+  margin-top: auto;
+}
+
+/* Título centralizado */
+.title {
+  font-size: 28px;
+  font-weight: bold;
+  color: #222;
+  margin: 20px;
+  text-align: center;
+}
+
+/* =======================
+   Hover e active (dispositivos que suportam)
+   ======================= */
+@media (hover: hover) and (pointer: fine) {
+  .caixa:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 20px rgba(0, 123, 255, 0.15);
+    background: linear-gradient(145deg, #f9f9f9, #ececec);
+  }
+
+  .botao:hover {
+    background: #444;
+  }
+}
+
+.caixa:active {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 20px rgba(0, 123, 255, 0.15);
+  background: linear-gradient(145deg, #f9f9f9, #ececec);
+}
+
+.botao:active {
+  background: #444;
+}
+
+/* =======================
+   Responsividade para telas menores
+   ======================= */
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    padding: 16px;
+  }
+
+  .caixa {
+    padding: 16px;
+    min-height: 140px;
+  }
+
+  .caixa h3 {
+    font-size: 14px;
+  }
+
+  .caixa p {
+    font-size: 18px;
+  }
+}

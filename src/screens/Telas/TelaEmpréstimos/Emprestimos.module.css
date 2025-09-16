@@ -1,0 +1,251 @@
+/* =======================
+   Container principal e filtros
+   ======================= */
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.filtros {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 10px;
+  flex-wrap: nowrap;
+  align-items: center;
+}
+
+/* =======================
+   Input de busca
+   ======================= */
+.inputBusca {
+  padding: 10px 14px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background-color: var(--hover-bg);
+  color: var(--text-color);
+  font-size: 1rem;
+  flex: 1;
+  width: auto;
+  flex-shrink: 1;
+  transition: border 0.2s ease, box-shadow 0.2s ease;
+}
+
+.inputBusca:focus {
+  outline: none;
+  border: 1px solid var(--text-color);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--text-color) 60%, transparent);
+}
+
+/* =======================
+   Botão "Novo"
+   ======================= */
+.botaoNovo {
+  background-color: #22c55e;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 14px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.1s;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.botaoNovo:active {
+  background-color: #16a34a;
+  transform: scale(0.98);
+}
+
+/* =======================
+   Wrapper e tabela principal
+   ======================= */
+.tabelaWrapper {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: auto;
+  background-color: var(--sidebar-bg);
+  border-radius: 8px;
+}
+
+.tabela {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: var(--sidebar-bg);
+}
+
+.tabela thead {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background-color: var(--sidebar-bg);
+}
+
+.tabela th,
+.tabela td {
+  padding: 18px;
+  border-bottom: 1px solid #333;
+  color: var(--text-color);
+  vertical-align: middle;
+  word-wrap: break-word;
+}
+
+.tabelaRow {
+  cursor: pointer;
+}
+
+.tabelaRow:active {
+  background-color: var(--hover-bg);
+}
+
+/* Alinhamento colunas */
+.tabela th:nth-child(1),
+.tabela td:nth-child(1),
+.tabela th:nth-child(2),
+.tabela td:nth-child(2),
+.tabela th:nth-child(3),
+.tabela td:nth-child(3),
+.tabela th:nth-child(4),
+.tabela td:nth-child(4) {
+  text-align: center;
+}
+
+.clienteClicavel {
+  cursor: pointer;
+  transition: color 0.2s ease;
+  text-align: center;
+}
+
+.clienteClicavel:active {
+  color: var(--sidebar-bg);
+  text-decoration: underline;
+}
+
+.notFound {
+  text-align: center;
+  font-size: 1rem;
+  color: #aaa;
+  padding: 10px;
+}
+
+.avisocliente {
+  color: #aaa;
+  font-size: 1rem;
+  margin-bottom: 8px;
+  margin-left: 12px;
+}
+
+/* =======================
+   Modal
+   ======================= */
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100dvw;
+  height: 100dvh;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  padding: 10px;
+}
+
+.modalCard {
+  background-color: var(--sidebar-bg);
+  border-radius: 10px;
+  width: 100%;
+  max-width: 600px;
+  max-height: 90dvh;
+  overflow-y: auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.modalTitle {
+  font-size: 1.5rem;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.modalInfo p {
+  margin: 6px 0;
+  font-size: 1rem;
+}
+
+.modalActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.btnFechar {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  background-color: #ef4444;
+  color: #fff;
+}
+
+
+/* =======================
+   Responsividade
+   ======================= */
+@media (max-width: 600px) {
+  .tabela th,
+  .tabela td {
+    font-size: 14px;
+    padding: 12px;
+  }
+  .inputBusca {
+    font-size: 0.9rem;
+    padding: 6px;
+  }
+  .botaoNovo {
+    font-size: 0.8rem;
+    padding: 6px;
+  }
+  .modalCard {
+    padding: 10px;
+  }
+  .modalTitle {
+    font-size: 1.2rem;
+  }
+  .modalInfo p {
+    font-size: 0.9rem;
+  }
+  .modalSearchInputId,
+  .modalSearchInputDate {
+    padding: 6px;
+  }
+  .modalTabela th,
+  .modalTabela td {
+    padding: 6px;
+    font-size: 0.8rem;
+  }
+  .btnLimpar,
+  .btnFechar {
+    padding: 6px 8px;
+    font-size: 0.8rem;
+  }
+}
+
+/* Hover effects */
+@media (hover: hover) and (pointer: fine) {
+  .botaoNovo:hover {
+    background-color: #16a34a;
+  }
+  .tabelaRow:hover {
+    background-color: var(--hover-bg);
+  }
+  .clienteClicavel:hover {
+    color: var(--sidebar-bg);
+    text-decoration: underline;
+  }
+}

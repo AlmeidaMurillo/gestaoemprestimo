@@ -1,0 +1,487 @@
+/* =======================
+   Container principal e filtros
+   ======================= */
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.filtros {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 10px;
+  flex-wrap: nowrap;
+  align-items: center;
+}
+
+/* =======================
+   Input de busca
+   ======================= */
+.inputBusca {
+  padding: 10px 14px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background-color: var(--hover-bg);
+  color: var(--text-color);
+  font-size: 1rem;
+  flex: 1;
+  width: auto;
+  flex-shrink: 1;
+  transition: border 0.2s ease, box-shadow 0.2s ease;
+}
+
+.inputBusca:focus {
+  outline: none;
+  border: 1px solid var(--text-color);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--text-color) 60%, transparent);
+}
+
+/* =======================
+   Botão "Novo"
+   ======================= */
+.botaoNovo {
+  background-color: #22c55e;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 14px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.1s;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.botaoNovo:active {
+  background-color: #16a34a;
+  transform: scale(0.98);
+}
+
+/* =======================
+   Wrapper e tabela principal
+   ======================= */
+.tabelaWrapper {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: auto;
+  background-color: var(--sidebar-bg);
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+}
+
+.tabela {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: var(--sidebar-bg);
+  overflow: auto;
+}
+
+.tabela thead {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background-color: var(--sidebar-bg);
+}
+
+.tabela th,
+.tabela td {
+  padding: 18px;
+  border-bottom: 1px solid #333;
+  color: var(--text-color);
+  vertical-align: middle;
+  word-wrap: break-word;
+}
+
+.tabelaRow {
+  cursor: pointer;
+}
+
+.tabelaRow:active {
+  background-color: var(--hover-bg);
+}
+
+.tabela th {
+  background-color: var(--sidebar-bg);
+}
+
+/* Alinhamento específico colunas 1 e 2 */
+.tabela th:nth-child(1),
+.tabela td:nth-child(1) {
+  text-align: left;
+  width: 0%;
+}
+
+.tabela th:nth-child(2),
+.tabela td:nth-child(2) {
+  text-align: center;
+  width: 30%;
+}
+
+/* =======================
+   Mensagem de "não encontrado"
+   ======================= */
+.notFound {
+  text-align: center;
+  font-size: 1rem;
+  color: #aaa;
+  padding: 10px;
+}
+
+/* =======================
+   Avisos sobre clique 
+
+   FALTA FAZER ISSO EM CLIENTES, EMPRESTIMOSPAGOS E CONFIGURACOES
+   ======================= */
+
+.clienteClicavel {
+  cursor: pointer;
+  transition: color 0.2s ease;
+  text-align: center;
+}
+
+.clienteClicavel:active {
+  color: var(--sidebar-bg);
+  text-decoration: underline;
+}
+
+.avisocliente {
+  color: #aaa;
+  font-size: 1rem;
+  margin-bottom: 8px;
+  margin-left: 12px;
+}
+
+/* =======================
+   Responsividades
+   ======================= */
+
+/* Até 600px - ajustes fonte e espaçamento */
+@media (max-width: 600px) {
+
+  .tabela th,
+  .tabela td {
+    padding: 18px;
+    font-size: 14px;
+  }
+
+  .filtros {
+    flex-wrap: nowrap;
+    gap: 10px;
+  }
+
+  .inputBusca {
+    font-size: 0.9rem;
+    padding: 8px;
+    min-width: 0;
+  }
+
+  .botaoNovo {
+    font-size: 0.8rem;
+    padding: 8px;
+  }
+}
+
+/* Até 800px e telas com alta resolução e suporte a hover */
+@media screen and (max-width: 800px) and (min-resolution: 2dppx) and (hover: hover) and (pointer: fine) {
+  .container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    box-sizing: border-box;
+  }
+
+  .filtros {
+    flex-wrap: nowrap;
+    gap: 10px;
+  }
+
+  .tabela td:nth-child(3) {
+    white-space: nowrap;
+  }
+
+  .inputBusca {
+    padding: 5px 10px;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    background-color: var(--hover-bg);
+    color: var(--text-color);
+    font-size: 1rem;
+    flex: 1;
+    min-width: 0;
+    transition: border 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .botaoNovo {
+    background-color: #22c55e;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+}
+
+/* Até 500px, alta resolução, hover e pointer fino */
+@media screen and (max-width: 500px) and (min-resolution: 2.5dppx) and (hover: hover) and (pointer: fine) {
+  .container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    box-sizing: border-box;
+  }
+
+  .tabelaWrapper {
+    flex: none;
+    height: 105%;
+    overflow-y: auto;
+    overflow-x: auto;
+    background-color: var(--sidebar-bg);
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+  }
+
+  .tabela {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: var(--sidebar-bg);
+    overflow: auto;
+  }
+
+  .tabela th {
+    background-color: var(--sidebar-bg);
+    font-size: 0.4rem;
+  }
+
+  .filtros {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 5px;
+    flex-wrap: nowrap;
+  }
+
+  .tabela td:nth-child(3) {
+    white-space: nowrap;
+  }
+
+  .inputBusca {
+    margin-top: -12px;
+    height: 15px;
+    padding: 0 5px;
+    font-size: 0.4rem;
+    line-height: 1;
+    border-radius: 4px;
+    background-color: var(--hover-bg);
+    color: var(--text-color);
+    border: 1px solid transparent;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .botaoNovo {
+    background-color: #22c55e;
+    color: white;
+    margin-top: -12px;
+    border: none;
+    border-radius: 4px;
+    height: 15px;
+    padding: 0 5px;
+    font-size: 0.4rem;
+    line-height: 1;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+}
+
+/* zoom 250% pra navegador desktop*/
+
+@media (min-resolution: 2.5dppx) and (hover: hover) and (pointer: fine) {
+
+  /* ────────────────────────────── */
+  /*     BARRA DE FILTROS           */
+  /* ────────────────────────────── */
+
+  .filtros {
+    display: flex;
+    gap: 5px;
+    margin-bottom: 5px;
+    flex-wrap: nowrap;
+    align-items: center;
+  }
+
+  .inputBusca {
+    padding: 5px 12px;
+    border: 1px solid transparent;
+    border-radius: 5px;
+    background-color: var(--hover-bg);
+    color: var(--text-color);
+    font-size: 0.4rem;
+    flex: 1;
+    width: auto;
+    flex-shrink: 1;
+    transition: border 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .inputBusca:focus {
+    outline: none;
+    border: 1px solid var(--text-color);
+    box-shadow: 0 0 0 1px color-mix(in srgb, var(--text-color) 60%, transparent);
+  }
+
+  .botaoNovo {
+    background-color: #22c55e;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 12px;
+    font-size: 0.4rem;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.1s;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .botaoNovo:active {
+    background-color: #16a34a;
+    transform: scale(0.98);
+  }
+
+  /* ────────────────────────────── */
+  /*           TABELA              */
+  /* ────────────────────────────── */
+
+  .tabelaWrapper {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: auto;
+    background-color: var(--sidebar-bg);
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+  }
+
+  .tabela {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: var(--sidebar-bg);
+    overflow: auto;
+  }
+
+  .tabela thead {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    background-color: var(--sidebar-bg);
+  }
+
+  .tabela th {
+    padding: 5px 12px;
+    border-bottom: 1px solid #333;
+    color: var(--text-color);
+    vertical-align: middle;
+    word-wrap: break-word;
+    font-size: 0.7rem;
+  }
+
+  .tabela td {
+    padding: 5px 12px;
+    border-bottom: 1px solid #333;
+    color: var(--text-color);
+    vertical-align: middle;
+    word-wrap: break-word;
+    font-size: 0.7rem;
+  }
+
+  .avisocliente {
+    color: #aaa;
+    font-size: 0.5rem;
+    margin-bottom: 8px;
+    margin-left: 12px;
+  }
+}
+
+/* zoom 400% para navegador desktop */
+@media (min-resolution: 4dppx) and (hover: hover) and (pointer: fine) {
+
+  .container {
+    height: 100dvh;
+  }
+
+  .filtros {
+    flex-wrap: nowrap;
+    gap: 10px;
+  }
+
+  /* ────────────────────────────── */
+  /*           TABELA              */
+  /* ────────────────────────────── */
+
+  .tabelaWrapper {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: auto;
+    background-color: var(--sidebar-bg);
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+  }
+
+  .tabela {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: var(--sidebar-bg);
+    overflow: auto;
+  }
+
+  .tabela thead {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    background-color: var(--sidebar-bg);
+  }
+
+  .tabela th {
+    padding: 3px 8px;
+    border-bottom: 1px solid #333;
+    color: var(--text-color);
+    vertical-align: middle;
+    word-wrap: break-word;
+    font-size: 0.7rem;
+  }
+
+  .tabela td {
+    padding: 3px 8px;
+    border-bottom: 1px solid #333;
+    color: var(--text-color);
+    vertical-align: middle;
+    word-wrap: break-word;
+    font-size: 0.7rem;
+  }
+
+  .avisocliente {
+    color: #aaa;
+    font-size: 0.4rem;
+    margin-left: 12px;
+  }
+}
+
+/* =======================
+   Hover effects (apenas dispositivos que suportam)
+   ======================= */
+@media (hover: hover) and (pointer: fine) {
+  .botaoNovo:hover {
+    background-color: #16a34a;
+  }
+
+  .tabelaRow:hover {
+    background-color: var(--hover-bg);
+  }
+
+  .clienteClicavel:hover {
+    color: var(--sidebar-bg);
+    text-decoration: underline;
+  }
+}

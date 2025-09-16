@@ -1,0 +1,427 @@
+/* ==========================================================================
+   ESTRUTURA PRINCIPAL E CONTAINERS
+   ========================================================================== */
+
+.container {
+  max-width: 100%;
+  width: 100%;
+  padding: 0 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+  min-height: 80vh;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+.supportSection,
+.historySection {
+  background-color: var(--sidebar-bg);
+  padding: 2.2rem 2.5rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.07);
+  width: 100%;
+  max-width: 100%;
+  flex: 1;
+}
+
+.supportSection {
+  border-radius: 16px;
+}
+
+.historySection {
+  max-height: 480px;
+  border-top-left-radius: 16px;
+  border-bottom-left-radius: 16px;
+  overflow-y: auto;
+}
+
+/* ==========================================================================
+   TÍTULOS E TEXTOS
+   ========================================================================== */
+
+.title {
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-weight: 800;
+  text-align: center;
+  color: var(--text-color);
+  letter-spacing: 1.2px;
+  user-select: none;
+}
+
+.subtitle {
+  font-weight: 700;
+  font-size: 1.6rem;
+  margin-top: 0.5rem;
+  margin-bottom: 1.4rem;
+  color: var(--text-color);
+  text-align: center;
+  user-select: none;
+}
+
+/* ==========================================================================
+   FORMULÁRIO DE SUPORTE
+   ========================================================================== */
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.8rem;
+}
+
+.fieldGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.label {
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--text-color);
+  user-select: none;
+}
+
+.input,
+.textarea {
+  font-family: inherit;
+  font-size: 0.7rem;
+  padding: 14px 18px;
+  border-radius: 12px;
+  background-color: var(--hover-bg);
+  color: var(--text-color);
+  min-height: 44px;
+  outline: none;
+  border: 1px solid transparent;
+  box-sizing: border-box;
+}
+
+.input:focus,
+.textarea:focus {
+  border: 2px solid var(--text-color);
+}
+
+.textarea {
+  min-height: 140px;
+  resize: vertical;
+  overflow: auto;
+}
+
+.helpText {
+  font-size: 0.8rem;
+  color: var(--text-color);
+  opacity: 0.7;
+  user-select: none;
+}
+
+/* ==========================================================================
+   BOTÃO DE ENVIO
+   ========================================================================== */
+
+.submitButton {
+  align-self: flex-end;
+  padding: 14px 28px;
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--text-color);
+  background: var(--active-bg);
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+  transition: background 0.3s ease, box-shadow 0.3s ease, transform 0.1s ease;
+  user-select: none;
+  min-width: 180px;
+}
+
+.submitButton:active:not(:disabled) {
+  transform: scale(0.98);
+  background: var(--button-hover);
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.3);
+}
+
+.submitButton:disabled {
+  cursor: not-allowed;
+  background: var(--hover-bg);
+  color: var(--text-color);
+  opacity: 0.5;
+  box-shadow: none;
+}
+
+/* ==========================================================================
+   MENSAGENS DE FEEDBACK
+   ========================================================================== */
+
+.feedbackSuccess {
+  color: #198754;
+  font-weight: 700;
+  font-size: 1rem;
+  margin-top: -0.6rem;
+  user-select: none;
+}
+
+.feedbackError {
+  color: #dc3545;
+  font-weight: 700;
+  font-size: 1rem;
+  margin-top: -0.6rem;
+  user-select: none;
+}
+
+/* ==========================================================================
+   LISTAGEM DE TICKETS
+   ========================================================================== */
+
+.ticketList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.3rem;
+}
+
+.ticketCard {
+  background-color: var(--sidebar-bg);
+  padding: 1.3rem 1.6rem;
+  border-radius: 14px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.07);
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  user-select: text;
+  transition: transform 0.2s ease;
+  border: 1px solid var(--hover-bg);
+}
+
+.ticketCard:active {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.10);
+}
+
+.ticketHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--text-color);
+}
+
+.ticketId {
+  user-select: none;
+  letter-spacing: 0.6px;
+}
+
+.ticketStatus {
+  padding: 5px 14px;
+  border-radius: 16px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: white;
+  user-select: none;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.statusResolved {
+  background-color: #28a745;
+}
+
+.statusInReview {
+  background-color: #ffc107;
+  color: #212529;
+}
+
+.statusPending {
+  background-color: #dc3545;
+}
+
+.ticketMessage {
+  font-style: italic;
+  color: var(--text-color);
+  font-size: 0.95rem;
+  line-height: 1.35;
+}
+
+/* ==========================================================================
+   MODAL DE MENSAGENS
+   ========================================================================== */
+
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.modalContent {
+  background-color: var(--sidebar-bg);
+  padding: 2rem;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 600px;
+  max-height: 80vh;
+  color: var(--text-color);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+}
+
+.modalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  font-size: 1.3rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.modalInfoContainer {
+  flex-shrink: 0;
+  margin-bottom: 1rem;
+}
+
+.modalInfo {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: var(--text-color);
+}
+
+.modalMensagensWrapper {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  padding-right: 0.5rem;
+  border-top: 1px solid var(--hover-bg);
+  border-bottom: 1px solid var(--hover-bg);
+  margin-bottom: 1rem;
+}
+
+.modalMensagem,
+.modalResposta {
+  background-color: var(--hover-bg);
+  padding: 1rem;
+  border-radius: 10px;
+  margin: 0.5rem 0;
+  font-style: italic;
+  white-space: pre-line;
+}
+
+.modalTextarea {
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: 10px;
+  background-color: var(--hover-bg);
+  color: var(--text-color);
+  font-size: 0.95rem;
+  border: 1px solid transparent;
+  outline: none;
+  resize: vertical;
+  margin-bottom: 1.5rem;
+  min-height: 80px;
+  max-height: 120px;
+}
+
+.modalTextarea:focus {
+  border: 2px solid var(--text-color);
+}
+
+.modalActions {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+  flex-shrink: 0;
+}
+
+.modalSendButton,
+.modalCloseButton {
+  padding: 10px 22px;
+  font-size: 0.95rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.modalSendButton {
+  background-color: var(--active-bg);
+  color: var(--text-color);
+  font-weight: 600;
+  border: none;
+}
+
+.modalSendButton:active {
+  background-color: var(--button-hover);
+  transform: scale(0.98);
+}
+
+.modalCloseButton {
+  background-color: var(--hover-bg);
+  color: var(--text-color);
+  font-weight: 500;
+  border: 1px solid var(--text-color);
+}
+
+.modalCloseButton:active {
+  background-color: var(--button-hover);
+  transform: scale(0.98);
+}
+
+/* ==========================================================================
+   RESPONSIVIDADE - TELAS PEQUENAS
+   ========================================================================== */
+
+@media (max-width: 720px) {
+  .container {
+    margin: 1rem auto 2rem auto;
+    padding: 0 1rem;
+  }
+
+  .submitButton {
+    min-width: 100%;
+    align-self: center;
+  }
+
+  .ticketList {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ==========================================================================
+   RESPONSIVIDADE - TELAS BAIXAS (altura)
+   ========================================================================== */
+
+@media (max-height: 730px) {
+  .modalContent {
+    padding: 1.5rem;
+    max-height: 75vh;
+  }
+}
+
+/* ==========================================================================
+   INTERAÇÕES DE HOVER (DESKTOP COM MOUSE)
+   ========================================================================== */
+
+@media (hover: hover) and (pointer: fine) {
+  .ticketCard:hover,
+  .ticketCard:focus-within {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+  }
+
+  .submitButton:hover:not(:disabled),
+  .submitButton:focus-visible {
+    background: var(--button-hover);
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.3);
+  }
+
+  .modalSendButton:hover,
+  .modalCloseButton:hover {
+    background-color: var(--button-hover);
+  }
+}

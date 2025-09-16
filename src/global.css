@@ -1,0 +1,84 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+  --bg-color: #f5f5f5;
+  --text-color: #000000;
+  --sidebar-bg: #ffffff;
+  --hover-bg: #e0e0e0;
+  --active-bg: #d5d5d5;
+}
+
+.lightTheme {
+  --bg-color: #f5f5f5;
+  --text-color: #000000;
+  --sidebar-bg: #ffffff;
+  --hover-bg: #e0e0e0;
+  --hoverscrollbar-thumb: #b0b0b0;
+  --active-bg: #d5d5d5;
+  --button-hover: #cccccc;
+}
+
+.darkTheme {
+  --bg-color: #121212;
+  --text-color: #ffffff;
+  --sidebar-bg: #1c1c1c;
+  --hover-bg: #333333;
+  --hoverscrollbar-thumb: #444444;
+  --active-bg: #2a2a2a;
+  --button-hover: #303030;
+}
+
+html, body, #root {
+  height: 100dvh;
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  font-size: 16px;
+  box-sizing: border-box;
+  overflow-y: auto;
+  overscroll-behavior-y: contain;
+  -webkit-overflow-scrolling: touch;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+}
+
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+  -webkit-tap-highlight-color: transparent;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  ::-webkit-scrollbar {
+    width: 3px;
+    height: 2px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: #929292;
+    transition: background 0.3s ease;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: var(--hoverscrollbar-thumb);
+  }
+
+  ::-webkit-scrollbar-button {
+    display: none;
+  }
+}
+
+@supports (-webkit-touch-callout: none) {
+  input,
+  textarea {
+    font-size: 16px; 
+  }
+}

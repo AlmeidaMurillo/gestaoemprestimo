@@ -2,41 +2,11 @@ import React, { useEffect, useState } from "react";
 import MenuDonos from "../../../components/MenuDonos/MenuDonos";
 import MenuUsers from "../../../components/MenuUsers/MenuUsers";
 import styles from "./PagarMes.module.css";
-import { useNavigate } from "react-router-dom";
+import API_URL from "../../../api";
 
 function PagarMes({ isCollapsed, toggleSidebar }) {
-  const navigate = useNavigate();
   const [tipoUsuario, setTipoUsuario] = useState("");
-  const [searchTerm, setSearchTerm] = useState("");
-  const [parcelas, setParcelas] = useState([
-    {
-      numeroParcela: 1,
-      totalParcelas: 3,
-      idEmprestimo: 2,
-      cliente: "MARCOS",
-      dataVencimento: "12/06/2025",
-      valor: 420.0,
-      status: "Pendente",
-    },
-    {
-      numeroParcela: 2,
-      totalParcelas: 3,
-      idEmprestimo: 2,
-      cliente: "MARCOS",
-      dataVencimento: "21/06/2025",
-      valor: 420.0,
-      status: "Pendente",
-    },
-    {
-      numeroParcela: 3,
-      totalParcelas: 3,
-      idEmprestimo: 2,
-      cliente: "MARCOS",
-      dataVencimento: "28/06/2025",
-      valor: 420.0,
-      status: "Pendente",
-    },
-  ]);
+  const [parcelas, setParcelas] = useState([]);
 
   useEffect(() => {
     const tipo = localStorage.getItem("tipoUsuario");
@@ -45,28 +15,93 @@ function PagarMes({ isCollapsed, toggleSidebar }) {
     } else {
       setTipoUsuario(tipo);
     }
+
+    const carregarParcelasMes = async () => {
+      const token = localStorage.getItem("token");
+      try {
+        const res = await fetch(`${API_URL}/parcelas/mes`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        const dados = await res.json();
+        const parcelasFormatadas = dados.map((p) => ({
+          id: p.id,
+          numeroParcela: p.numero_parcela,
+          totalParcelas: p.totalParcelas,
+          idEmprestimo: p.id_emprestimo,
+          cliente: p.cliente,
+          dataVencimento: p.data_vencimento
+            ? new Date(p.data_vencimento).toLocaleDateString("pt-BR")
+            : "",
+          valor: parseFloat(p.valor_parcela),
+          status: p.status,
+        }));
+        setParcelas(parcelasFormatadas);
+      } catch (err) {
+        console.error("Erro ao carregar parcelas do mês:", err);
+      }
+    };
+
+    carregarParcelasMes();
   }, []);
 
-  const alternarStatus = (index) => {
-    const novas = [...parcelas];
-    novas[index].status = novas[index].status === "Pago" ? "Pendente" : "Pago";
-    setParcelas(novas);
+  const alternarStatus = async (index) => {
+    const parcela = parcelas[index];
+
+    const novoStatus = parcela.status === "Pago" ? "Pendente" : "Pago";
+
+    try {
+      const token = localStorage.getItem("token");
+      const response = await fetch(
+        `${API_URL}/parcelas/${parcela.id}/status`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ status: novoStatus }),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Erro ao atualizar status");
+      }
+
+      const data = await response.json();
+
+      const novasParcelas = [...parcelas];
+      novasParcelas[index].status = data.statusParcela;
+
+      novasParcelas[index].dataPagamento =
+        novasParcelas[index].status === "Pago"
+          ? new Date().toLocaleString("pt-BR")
+          : null;
+
+      setParcelas(novasParcelas);
+    } catch (err) {
+      console.error(err);
+      alert("Erro ao atualizar o status da parcela.");
+    }
   };
 
-  const filtered = parcelas.filter((p) =>
-    p.cliente.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const formatarValor = (valor) => {
+    if (valor === null || valor === undefined) return "-";
+    return new Intl.NumberFormat("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+    }).format(valor);
+  };
 
   const renderParcelas = () => (
     <div className={`${isCollapsed ? styles.collapsed : ""}`}>
       <div className={styles.parcelasBox}>
-        {filtered.map((p, i) => (
+        {parcelas.map((p, i) => (
           <div key={i} className={styles.parcelaCard}>
             <p><strong>Cliente:</strong> {p.cliente}</p>
             <p><strong>Parcela:</strong> {p.numeroParcela}/{p.totalParcelas}</p>
             <p><strong>ID Empréstimo:</strong> {p.idEmprestimo}</p>
             <p><strong>Data Vencimento:</strong> {p.dataVencimento}</p>
-            <p><strong>Valor:</strong> R$ {p.valor.toFixed(2)}</p>
+            <p><strong>Valor:</strong> R$ {formatarValor(p.valor)}</p>
             <p>
               <strong>Status:</strong>{" "}
               <span className={p.status === "Pago" ? styles.statusPago : styles.statusPendente}>
@@ -78,26 +113,16 @@ function PagarMes({ isCollapsed, toggleSidebar }) {
             </button>
           </div>
         ))}
-        {filtered.length === 0 && (
-          <p className={styles.notFound}>Nenhuma parcela encontrada.</p>
-        )}
+        {parcelas.length === 0 && <p className={styles.notFound}>Nenhuma parcela encontrada.</p>}
       </div>
     </div>
   );
 
   const renderMenu = () => {
     if (tipoUsuario === "admin") {
-      return (
-        <MenuDonos isCollapsed={isCollapsed} toggleSidebar={toggleSidebar}>
-          {renderParcelas()}
-        </MenuDonos>
-      );
+      return <MenuDonos isCollapsed={isCollapsed} toggleSidebar={toggleSidebar}>{renderParcelas()}</MenuDonos>;
     } else if (tipoUsuario === "user") {
-      return (
-        <MenuUsers isCollapsed={isCollapsed} toggleSidebar={toggleSidebar}>
-          {renderParcelas()}
-        </MenuUsers>
-      );
+      return <MenuUsers isCollapsed={isCollapsed} toggleSidebar={toggleSidebar}>{renderParcelas()}</MenuUsers>;
     } else {
       return <p>Carregando...</p>;
     }

@@ -51,3 +51,123 @@ const [clientes, setClientes] = useState([
       emprestimosPagos: 3,
     },
   ]);
+
+import jsPDF from "jspdf";
+import autoTable from "jspdf-autotable";
+
+  const [modalEditar, setModalEditar] = useState(false);
+  const [modalObs, setModalObs] = useState(false);
+  const [observacao, setObservacao] = useState("");
+  const [editCliente, setEditCliente] = useState({
+    nome: "",
+    telefone: "",
+    endereco: "",
+    indicado: "",
+  });
+
+const abrirModalEditar = () => {
+    setEditCliente({
+      nome: clienteSelecionado.nome,
+      telefone: clienteSelecionado.telefone,
+      endereco: clienteSelecionado.endereco,
+      indicado: clienteSelecionado.indicado,
+    });
+    setModalEditar(true);
+  };
+  const salvarEdicao = async () => {
+    console.log("Salvar edição no backend aqui", editCliente);
+    setModalEditar(false);
+    fecharModal();
+  };
+
+  const apagarCliente = async () => {
+    if (window.confirm("Tem certeza que deseja apagar este cliente?")) {
+      console.log("Apagar no backend aqui", clienteSelecionado.id);
+      fecharModal();
+    }
+  };
+
+const abrirModalObs = () => {
+    setModalObs(true);
+  };
+  const salvarObs = () => {
+    console.log("Salvar observação só local, não vai no relatório:", observacao);
+    setModalObs(false);
+  };
+
+  const gerarRelatorio = () => {
+    if (!clienteSelecionado) return;
+
+    const doc = new jsPDF();
+    doc.setFontSize(18);
+    doc.text(`Relatório do Cliente - ${clienteSelecionado.nome}`, 14, 20);
+
+    doc.setFontSize(12);
+    doc.text("Dados Pessoais", 14, 30);
+    autoTable(doc, {
+      startY: 35,
+      head: [["Campo", "Valor"]],
+      body: [
+        ["Nome", clienteSelecionado.nome],
+        ["Telefone", clienteSelecionado.telefone || "-"],
+        ["Endereço", clienteSelecionado.endereco || "-"],
+        ["Indicado por", clienteSelecionado.indicado || "-"],
+      ],
+    });
+
+    const posY = doc.lastAutoTable.finalY + 10;
+    doc.text("Empréstimos", 14, posY);
+    autoTable(doc, {
+      startY: posY + 5,
+      head: [["Campo", "Valor"]],
+      body: [
+        ["Total de Empréstimos", clienteSelecionado.total_emprestimos_feitos],
+        ["Pendentes", clienteSelecionado.emprestimos_pendentes],
+        ["Atrasados", clienteSelecionado.emprestimos_atrasados],
+        ["Quitados", clienteSelecionado.emprestimos_pagos],
+        ["Total Emprestado", formatarValor(clienteSelecionado.total_valor_emprestado)],
+        ["Lucro Total", formatarValor(clienteSelecionado.lucro_total)],
+        ["Maior Valor Emprestado", formatarValor(clienteSelecionado.maior_valor_emprestado)],
+        ["Atrasos", clienteSelecionado.atrasos],
+      ],
+    });
+
+    doc.save(`relatorio_${clienteSelecionado.nome}.pdf`);
+  };
+
+
+
+  {modalEditar && (
+        <div className={styles.modalOverlay} onClick={() => setModalEditar(false)}>
+          <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
+            <button className={styles.modalClose} onClick={() => setModalEditar(false)}>&times;</button>
+            <h2 className={styles.modalTitle}>Editar Cliente</h2>
+            <div className={styles.modalBody}>
+              <input type="text" value={editCliente.nome} onChange={(e) => setEditCliente({ ...editCliente, nome: e.target.value })} />
+              <input type="text" value={editCliente.telefone} onChange={(e) => setEditCliente({ ...editCliente, telefone: e.target.value })} />
+              <input type="text" value={editCliente.endereco} onChange={(e) => setEditCliente({ ...editCliente, endereco: e.target.value })} />
+              <input type="text" value={editCliente.indicado} onChange={(e) => setEditCliente({ ...editCliente, indicado: e.target.value })} />
+              <button className={styles.botaoSalvar} onClick={salvarEdicao}>Salvar Alterações</button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {modalObs && (
+        <div className={styles.modalOverlay} onClick={() => setModalObs(false)}>
+          <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
+            <button className={styles.modalClose} onClick={() => setModalObs(false)}>&times;</button>
+            <h2 className={styles.modalTitle}>Observação</h2>
+            <textarea
+              className={styles.textareaObs}
+              value={observacao}
+              onChange={(e) => setObservacao(e.target.value)}
+              placeholder="Escreva observações sobre este cliente..."
+            />
+            <button className={styles.botaoSalvar} onClick={salvarObs}>Salvar Observação</button>
+          </div>
+        </div>
+      )}
+
+
+

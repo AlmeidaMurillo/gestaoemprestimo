@@ -44,8 +44,9 @@ function Perfil({ isCollapsed, toggleSidebar }) {
   const [statusConta, setStatusConta] = useState("Ativo");
 
   useEffect(() => {
+    const token = localStorage.getItem("token");
     const tipo = localStorage.getItem("tipoUsuario");
-    if (!tipo) {
+    if (!token || !tipo) {
       window.location.href = "/";
     } else {
       setTipoUsuario(tipo);
@@ -62,6 +63,12 @@ function Perfil({ isCollapsed, toggleSidebar }) {
       reader.readAsDataURL(file);
     }
   };
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    window.location.href = "/";
+  };
+
 
   const renderModais = () => (
     <>
@@ -168,7 +175,7 @@ function Perfil({ isCollapsed, toggleSidebar }) {
           <button className={styles.btn} onClick={() => setMostrarModalEmpresa(true)}>
             <FaBuilding className={styles.icon} /> Editar Empresa
           </button>
-          <button className={styles.btnCancel} onClick={() => (window.location.href = "/logout")}>
+          <button className={styles.btnCancel} onClick={handleLogout}>
             <FaSignOutAlt className={styles.icon} /> Sair
           </button>
         </div>

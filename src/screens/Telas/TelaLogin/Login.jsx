@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import styles from "./Login.module.css";
 import { FaUser, FaLock, FaEye, FaEyeSlash } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import API_URL from "../../../api";
 
 export default function Login() {
   const [usuario, setUsuario] = useState("");
@@ -14,29 +15,29 @@ export default function Login() {
   const toggleSenha = () => setMostrarSenha(!mostrarSenha);
 
   const handleLogin = async (e) => {
-  e.preventDefault();
+    e.preventDefault();
+    try {
+      const response = await fetch(`${API_URL}/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username: usuario, password: senha }),
+      });
 
-  try {
-    const response = await fetch("http://localhost:3000/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username: usuario, password: senha })
-    });
+      const data = await response.json();
 
-    const data = await response.json();
-
-    if (response.ok) {
-      localStorage.setItem("token", data.token);
-      navigate("/dashboard");
-    } else {
-      setErro(data.error || "Usuário ou senha incorretos.");
+      if (response.ok && data.token) {
+        localStorage.setItem("token", data.token); 
+        localStorage.setItem("tipoUsuario", "admin");
+        navigate("/dashboard"); 
+      } else {
+        setErro(data.error || "Usuário ou senha incorretos.");
+        setTimeout(() => setErro(""), 3000);
+      }
+    } catch (err) {
+      setErro("Erro ao conectar com o servidor.", err);
       setTimeout(() => setErro(""), 3000);
     }
-  } catch (err) {
-    setErro("Erro ao conectar com o servidor.", err);
-    setTimeout(() => setErro(""), 3000);
-  }
-};
+  };
 
   useEffect(() => {
     const handleResize = () => {
@@ -49,7 +50,10 @@ export default function Login() {
   }, []);
 
   return (
-    <div className={`${styles.loginContainer} ${inputFocused ? styles.keyboardOpen : ""}`}>
+    <div
+      className={`${styles.loginContainer} ${inputFocused ? styles.keyboardOpen : ""
+        }`}
+    >
       <div className={styles.loginBox}>
         <h1 className={styles.title}>MultiAlmeida</h1>
         <h2 className={styles.soubtitle}>Gestão Empréstimos</h2>

@@ -2,13 +2,12 @@ import React, { useEffect, useState } from "react";
 import MenuDonos from "../../../components/MenuDonos/MenuDonos";
 import MenuUsers from "../../../components/MenuUsers/MenuUsers";
 import styles from "./EmprestimosPagos.module.css";
-import { useNavigate } from "react-router-dom";
+import API_URL from "../../../api";
 
 function EmprestimosPagos({ isCollapsed, toggleSidebar }) {
   const [tipoUsuario, setTipoUsuario] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const [emprestimos, setEmprestimos] = useState([]);
-  const navigate = useNavigate();
 
   const [selectedClient, setSelectedClient] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -23,15 +22,21 @@ function EmprestimosPagos({ isCollapsed, toggleSidebar }) {
       setTipoUsuario(tipo);
     }
 
-    const fakeData = [];
-    for (let i = 1; i <= 50; i++) {
-      fakeData.push({
-        id: i,
-        cliente: "Murillo Almeida",
-        data: `2025-07-${((i % 30) + 1).toString().padStart(2, "0")}`,
-      });
+    const token = localStorage.getItem("token");
+    if (token) {
+      const carregarDados = async () => {
+        try {
+          const res = await fetch(`${API_URL}/emprestimos/pagos`, {
+            headers: { Authorization: `Bearer ${token}` },
+          });
+          const dados = await res.json();
+          setEmprestimos(dados);
+        } catch (err) {
+          console.error(err);
+        }
+      };
+      carregarDados();
     }
-    setEmprestimos(fakeData);
   }, []);
 
   const filteredEmprestimos = emprestimos.filter(
@@ -40,12 +45,7 @@ function EmprestimosPagos({ isCollapsed, toggleSidebar }) {
       e.id.toString().includes(searchTerm)
   );
 
-  const openModal = (client) => {
-    setSelectedClient(client);
-    setModalSearchTerm("");
-    setModalSearchData("");
-    setIsModalOpen(true);
-  };
+
 
   const closeModal = () => {
     setIsModalOpen(false);
@@ -68,6 +68,15 @@ function EmprestimosPagos({ isCollapsed, toggleSidebar }) {
     const dataMatch = !modalSearchData || e.data.includes(modalSearchData);
     return idMatch && dataMatch;
   });
+
+  const formatarData = (dataString) => {
+    if (!dataString) return ""
+    const data = new Date(dataString)
+    const dia = String(data.getDate()).padStart(2, "0")
+    const mes = String(data.getMonth() + 1).padStart(2, "0")
+    const ano = data.getFullYear()
+    return `${dia}/${mes}/${ano}`
+  }
 
   const renderModal = () => {
     if (!isModalOpen || !selectedClient) return null;
@@ -151,53 +160,48 @@ function EmprestimosPagos({ isCollapsed, toggleSidebar }) {
   };
 
   const renderEmprestimos = () => (
-  <div className={styles.container}>
-    <div className={styles.filtros}>
-      <input
-        type="text"
-        placeholder="Pesquisar por cliente ou ID..."
-        className={styles.inputBusca}
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-      />
-    </div>
-    <p className={styles.avisocliente}>
-      👆 Clique No Card Do Cliente Desejado Para Ver Os Empréstimos Pagos Mais Detalhados.
-    </p>
+    <div className={styles.container}>
+      <div className={styles.filtros}>
+        <input
+          type="text"
+          placeholder="Pesquisar por cliente ou ID..."
+          className={styles.inputBusca}
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+      </div>
 
-    <div className={styles.tabelaWrapper}>
-      <table className={styles.tabela}>
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Cliente</th>
-          </tr>
-        </thead>
-        <tbody>
-          {filteredEmprestimos.length > 0 ? (
-            filteredEmprestimos.map((e) => (
-              <tr
-                className={styles.tabelaRow}
-                key={`${e.id}-${e.cliente}`}
-                onClick={() => navigate(`/listaemprestimos`)}
-              >
-                <td>{e.id}</td>
-                <td className={styles.clienteClicavel}>👁️ {e.cliente}</td>
-              </tr>
-            ))
-          ) : (
+      <div className={styles.tabelaWrapper}>
+        <table className={styles.tabela}>
+          <thead>
             <tr>
-              <td colSpan="2" className={styles.notFound}>
-                Nenhum empréstimo encontrado.
-              </td>
+              <th>ID Empréstimo</th>
+              <th>Cliente</th>
+              <th>Data Empréstimo</th>
+              <th>Status</th>
             </tr>
-          )}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {filteredEmprestimos.length > 0 ? (
+              filteredEmprestimos.map((e) => (
+                <tr key={`${e.id}-${e.cliente}`} className={styles.tabelaRow}>
+                  <td>{e.id}</td>
+                  <td className={styles.clienteClicavel}>👁️ {e.cliente}</td>
+                  <td>{formatarData(e.dataemprestimo)}</td>
+                  <td>{e.statos}</td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="4" className={styles.notFound}>Nenhum empréstimo encontrado.</td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
+      {renderModal()}
     </div>
-    {renderModal()}
-  </div>
-);
+  );
 
   const renderMenu = () =>
     tipoUsuario === "admin" ? (

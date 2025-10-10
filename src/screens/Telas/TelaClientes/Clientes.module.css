@@ -4,32 +4,30 @@
 .container {
   display: flex;
   flex-direction: column;
-  height: 100%;
   box-sizing: border-box;
+  height: 100%;
 }
 
 .filtros {
   display: flex;
-  gap: 15px;
-  margin-bottom: 10px;
-  flex-wrap: nowrap;
-  align-items: center;
+  flex-wrap: wrap; 
+  gap: 1rem;
+  margin-bottom: 1rem;
 }
 
 /* =======================
    Input de busca
    ======================= */
 .inputBusca {
-  padding: 10px 14px;
+  flex: 1;
+  min-width: 0;
+  width: 100%;
+  padding: clamp(4px, 2vw, 10px) clamp(6px, 3vw, 14px);
+  font-size: clamp(0.7rem, 3vw, 1rem);
   border: 1px solid transparent;
   border-radius: 8px;
   background-color: var(--hover-bg);
   color: var(--text-color);
-  font-size: 1rem;
-  flex: 1;
-  width: auto;
-  flex-shrink: 1;
-  transition: border 0.2s ease, box-shadow 0.2s ease;
 }
 
 .inputBusca:focus {
@@ -42,15 +40,16 @@
    Botão "Novo"
    ======================= */
 .botaoNovo {
+  flex: 1;
+  text-align: center;
+  padding: clamp(4px, 2vw, 10px) clamp(6px, 3vw, 14px);
+  font-size: clamp(0.7rem, 3vw, 1rem);
   background-color: #22c55e;
   color: white;
   border: none;
   border-radius: 8px;
-  padding: 10px 14px;
   cursor: pointer;
-  transition: background-color 0.3s, transform 0.1s;
   white-space: nowrap;
-  flex-shrink: 0;
 }
 
 .botaoNovo:active {
@@ -63,18 +62,17 @@
    ======================= */
 .tabelaWrapper {
   flex: 1;
+  border-top-left-radius: 12px;
+  max-height: 78vh;       
+  overflow-x: auto;        
   overflow-y: auto;
-  overflow-x: auto;
   background-color: var(--sidebar-bg);
-  border-top-left-radius: 8px;
-  border-bottom-left-radius: 8px;
+  -webkit-overflow-scrolling: touch;
 }
 
 .tabela {
   width: 100%;
   border-collapse: collapse;
-  background-color: var(--sidebar-bg);
-  overflow: auto;
 }
 
 .tabela thead {
@@ -145,11 +143,206 @@
   text-decoration: underline;
 }
 
-.avisocliente {
-  color: #aaa;
+
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  overflow-y: auto;
+  padding: 1rem;
+}
+
+.modalContent {
+  background: var(--bg-color);
+  color: var(--text-color);
+  border-radius: 16px;
+  max-width: 600px;
+  width: 100%;
+  padding: 2rem;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.25);
+  position: relative;
+  animation: slideDown 0.3s ease-out;
+  border: 1px solid var(--hover-bg);
+}
+
+.modalClose {
+  position: absolute;
+  top: 16px;
+  right: 20px;
+  background: transparent;
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
+  color: var(--text-color);
+  transition: color 0.2s;
+}
+
+.modalClose:hover {
+  color: #ff4d4f;
+}
+
+.modalTitle {
+  margin-bottom: 1.5rem;
+  font-size: 1.8rem;
+  color: var(--text-color);
+  border-bottom: 1px solid var(--hover-bg);
+  padding-bottom: 0.5rem;
+}
+
+.modalBody {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  max-height: 80vh;
+  overflow-y: auto;
+  padding-right: 0.5rem;
+}
+
+.modalBody::-webkit-scrollbar {
+  width: 8px;
+}
+.modalBody::-webkit-scrollbar-thumb {
+  background-color: var(--hoverscrollbar-thumb);
+  border-radius: 4px;
+}
+
+.card {
+  background: var(--sidebar-bg);
+  color: var(--text-color);
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  transition: transform 0.2s, background 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  background: var(--hover-bg);
+}
+
+.card input {
+  width: 100%;
+  padding: 0.7rem 1rem;
+  margin: 0.3rem 0 1rem 0;
+  border: 1px solid var(--hover-bg);
+  border-radius: 8px;
+  background: var(--bg-color);
+  color: var(--text-color);
   font-size: 1rem;
-  margin-bottom: 8px;
-  margin-left: 12px;
+  transition: border 0.2s, box-shadow 0.2s;
+}
+
+.card input:focus {
+  outline: none;
+  border-color: #4a90e2;
+  box-shadow: 0 0 5px rgba(74,144,226,0.5);
+}
+
+.botaoSalvar {
+  background: #4a90e2;
+  color: #fff;
+  padding: 0.7rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background 0.2s;
+}
+
+.botaoSalvar:hover {
+  background: #357ab7;
+}
+
+.modalActions {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.botaoEditar {
+  background: #4caf50;
+  color: white;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.botaoApagar {
+  background: #f44336;
+  color: white;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.botaoObs {
+  background: #ff9800;
+  color: white;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.botaoRelatorio {
+  background: #2196f3;
+  color: white;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.textareaObs {
+  width: 100%;
+  min-height: 120px;
+  padding: 12px 14px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  font-size: 15px;
+  font-family: "Segoe UI", Arial, sans-serif;
+  resize: vertical;
+  outline: none;
+  transition: all 0.3s ease;
+  background-color: #f9f9f9;
+}
+
+.textareaObs:focus {
+  border-color: #4a90e2;
+  background-color: #fff;
+  box-shadow: 0 0 6px rgba(74, 144, 226, 0.3);
+}
+
+.textareaObs::placeholder {
+  color: #999;
+  font-style: italic;
+}
+
+@media (max-width: 768px) {
+  .modalContent {
+    padding: 1.5rem;
+  }
+  .modalTitle {
+    font-size: 1.5rem;
+  }
+  .card {
+    padding: 1rem;
+  }
+}
+
+@keyframes slideDown {
+  from { transform: translateY(-20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
 }
 
 /* =======================

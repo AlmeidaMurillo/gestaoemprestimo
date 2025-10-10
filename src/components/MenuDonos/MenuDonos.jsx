@@ -8,7 +8,6 @@ import {
   FaFileInvoiceDollar,
   FaClock,
   FaCheckCircle,
-  FaCog,
   FaHeadset,
   FaUserCircle,
   FaBars,
@@ -154,7 +153,6 @@ function MenuDonos({ children }) {
       label: "Empréstimos Pagos",
       path: "/emprestimospagos",
     },
-    { icon: <FaCog />, label: "Configurações", path: "/configuracoes" },
     { icon: <FaHeadset />, label: "Suporte", path: "/suporte" },
     { icon: <FaUserCircle />, label: "Perfil", path: "/perfil" },
   ];

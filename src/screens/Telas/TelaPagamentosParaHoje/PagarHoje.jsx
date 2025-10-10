@@ -2,23 +2,11 @@ import React, { useEffect, useState } from "react";
 import MenuDonos from "../../../components/MenuDonos/MenuDonos";
 import MenuUsers from "../../../components/MenuUsers/MenuUsers";
 import styles from "./PagarHoje.module.css";
-import { useNavigate } from "react-router-dom";
+import API_URL from "../../../api";
 
 function PagarHoje({ isCollapsed, toggleSidebar }) {
-  const navigate = useNavigate();
   const [tipoUsuario, setTipoUsuario] = useState("");
-  const [searchTerm, setSearchTerm] = useState("");
-  const [parcelas, setParcelas] = useState([
-    {
-      numeroParcela: 1,
-      totalParcelas: 2,
-      idEmprestimo: 1,
-      cliente: "BRUNETE",
-      dataVencimento: "24/06/2025",
-      valor: 390.0,
-      status: "Pendente",
-    },
-  ]);
+  const [parcelas, setParcelas] = useState([]);
 
   useEffect(() => {
     const tipo = localStorage.getItem("tipoUsuario");
@@ -27,31 +15,100 @@ function PagarHoje({ isCollapsed, toggleSidebar }) {
     } else {
       setTipoUsuario(tipo);
     }
+
+    const carregarParcelasHoje = async () => {
+      const token = localStorage.getItem("token");
+      try {
+        const res = await fetch(`${API_URL}/parcelas/hoje`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        const dados = await res.json();
+        const parcelasFormatadas = dados.map((p) => ({
+          id: p.id,
+          numeroParcela: p.numero_parcela,
+          totalParcelas: p.totalParcelas,
+          idEmprestimo: p.id_emprestimo,
+          cliente: p.cliente,
+          dataVencimento: p.data_vencimento
+            ? new Date(p.data_vencimento).toLocaleDateString("pt-BR")
+            : "",
+          valor: parseFloat(p.valor_parcela),
+          status: p.status,
+        }));
+        setParcelas(parcelasFormatadas);
+      } catch (err) {
+        console.error("Erro ao carregar parcelas de hoje:", err);
+      }
+    };
+
+    carregarParcelasHoje();
   }, []);
 
-  const alternarStatus = (index) => {
-    const novas = [...parcelas];
-    novas[index].status = novas[index].status === "Pago" ? "Pendente" : "Pago";
-    setParcelas(novas);
+  const alternarStatus = async (index) => {
+    const parcela = parcelas[index];
+
+    const novoStatus = parcela.status === "Pago" ? "Pendente" : "Pago";
+
+    try {
+      const token = localStorage.getItem("token");
+      const response = await fetch(
+        `${API_URL}/parcelas/${parcela.id}/status`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ status: novoStatus }),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Erro ao atualizar status");
+      }
+
+      const data = await response.json();
+
+      const novasParcelas = [...parcelas];
+      novasParcelas[index].status = data.statusParcela;
+
+      novasParcelas[index].dataPagamento =
+        novasParcelas[index].status === "Pago"
+          ? new Date().toLocaleString("pt-BR")
+          : null;
+
+      setParcelas(novasParcelas);
+    } catch (err) {
+      console.error(err);
+      alert("Erro ao atualizar o status da parcela.");
+    }
   };
 
-  const filtered = parcelas.filter((p) =>
-    p.cliente.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const formatarValor = (valor) => {
+    if (valor === null || valor === undefined) return "-";
+    return new Intl.NumberFormat("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+    }).format(valor);
+  };
 
   const renderParcelas = () => (
     <div className={`${isCollapsed ? styles.collapsed : ""}`}>
       <div className={styles.parcelasBox}>
-        {filtered.map((p, i) => (
+        {parcelas.map((p, i) => (
           <div key={i} className={styles.parcelaCard}>
             <p><strong>Cliente:</strong> {p.cliente}</p>
             <p><strong>Parcela:</strong> {p.numeroParcela}/{p.totalParcelas}</p>
             <p><strong>ID Empréstimo:</strong> {p.idEmprestimo}</p>
             <p><strong>Data Vencimento:</strong> {p.dataVencimento}</p>
-            <p><strong>Valor:</strong> R$ {p.valor.toFixed(2)}</p>
+            <p><strong>Valor:</strong> R$ {formatarValor(p.valor)}</p>
             <p>
               <strong>Status:</strong>{" "}
-              <span className={p.status === "Pago" ? styles.statusPago : styles.statusPendente}>
+              <span
+                className={
+                  p.status === "Pago" ? styles.statusPago : styles.statusPendente
+                }
+              >
                 {p.status}
               </span>
             </p>
@@ -60,9 +117,7 @@ function PagarHoje({ isCollapsed, toggleSidebar }) {
             </button>
           </div>
         ))}
-        {filtered.length === 0 && (
-          <p className={styles.notFound}>Nenhuma parcela encontrada.</p>
-        )}
+        {parcelas.length === 0 && <p className={styles.notFound}>Nenhuma parcela encontrada.</p>}
       </div>
     </div>
   );
@@ -88,4 +143,4 @@ function PagarHoje({ isCollapsed, toggleSidebar }) {
   return <>{renderMenu()}</>;
 }
 
-export default PagarHoje
+export default PagarHoje;

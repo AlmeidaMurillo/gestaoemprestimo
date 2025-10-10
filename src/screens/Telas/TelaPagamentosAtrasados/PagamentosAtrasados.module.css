@@ -54,6 +54,10 @@
   cursor: pointer;
   transition: background 0.3s ease;
 }
+.statusPago {
+  color: #2e7d32;
+  font-weight: 600;
+}
 
 .statusAtrasada {
   color: #d32f2f;

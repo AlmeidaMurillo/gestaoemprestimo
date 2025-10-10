@@ -4,32 +4,30 @@
 .container {
   display: flex;
   flex-direction: column;
-  height: 100%;
   box-sizing: border-box;
+  height: 100%;
 }
 
 .filtros {
   display: flex;
-  gap: 15px;
-  margin-bottom: 10px;
-  flex-wrap: nowrap;
-  align-items: center;
+  flex-wrap: wrap; 
+  gap: 1rem;
+  margin-bottom: 1rem;
 }
 
 /* =======================
    Input de busca
    ======================= */
 .inputBusca {
-  padding: 10px 14px;
+  flex: 1;
+  min-width: 0;
+  width: 100%;
+  padding: clamp(4px, 2vw, 10px) clamp(6px, 3vw, 14px);
+  font-size: clamp(0.7rem, 3vw, 1rem);
   border: 1px solid transparent;
   border-radius: 8px;
   background-color: var(--hover-bg);
   color: var(--text-color);
-  font-size: 1rem;
-  flex: 1;
-  width: auto;
-  flex-shrink: 1;
-  transition: border 0.2s ease, box-shadow 0.2s ease;
 }
 
 .inputBusca:focus {
@@ -42,15 +40,16 @@
    Botão "Novo"
    ======================= */
 .botaoNovo {
+  flex: 1;
+  text-align: center;
+  padding: clamp(4px, 2vw, 10px) clamp(6px, 3vw, 14px);
+  font-size: clamp(0.7rem, 3vw, 1rem);
   background-color: #22c55e;
   color: white;
   border: none;
   border-radius: 8px;
-  padding: 10px 14px;
   cursor: pointer;
-  transition: background-color 0.3s, transform 0.1s;
   white-space: nowrap;
-  flex-shrink: 0;
 }
 
 .botaoNovo:active {
@@ -63,16 +62,17 @@
    ======================= */
 .tabelaWrapper {
   flex: 1;
+  border-top-left-radius: 12px;
+  max-height: 78vh;       
+  overflow-x: auto;        
   overflow-y: auto;
-  overflow-x: auto;
   background-color: var(--sidebar-bg);
-  border-radius: 8px;
+  -webkit-overflow-scrolling: touch;
 }
 
 .tabela {
   width: 100%;
   border-collapse: collapse;
-  background-color: var(--sidebar-bg);
 }
 
 .tabela thead {
@@ -129,112 +129,308 @@
   padding: 10px;
 }
 
-.avisocliente {
-  color: #aaa;
-  font-size: 1rem;
-  margin-bottom: 8px;
-  margin-left: 12px;
-}
-
 /* =======================
    Modal
    ======================= */
+
+.emprestimoModalOverlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0,0,0,0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1001;
+  padding: 1rem;
+}
+
+.emprestimoModalCard {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  width: min(95%, 40rem);
+  max-height: 90vh;
+  border-radius: 1rem;
+  box-shadow: 0 0.5rem 1.5rem rgba(0,0,0,0.2);
+  display: flex;
+  flex-direction: column;
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  overflow: auto; 
+  padding: 1rem 1.5rem;
+}
+
+.emprestimoModalCard::-webkit-scrollbar {
+  width: 0.5rem;
+}
+
+.emprestimoModalCard::-webkit-scrollbar-thumb {
+  background-color: var(--hoverscrollbar-thumb);
+  border-radius: 0.5rem;
+}
+
+.emprestimoModalTitle {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.emprestimoModalBody {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.modalInfoLine {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  font-size: 0.95rem;
+}
+
+.modalInfoLine p {
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.modalInfoLine p strong {
+  font-weight: 600;
+}
+
+.emprestimoModalActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  margin-top: 1rem;
+  flex-wrap: wrap;
+}
+
+.emprestimoModalActions button {
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  border: none;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.95rem;
+  background-color: var(--active-bg);
+  color: var(--text-color);
+}
+
+.emprestimoModalActions button:hover {
+  background-color: var(--button-hover);
+}
+
+@media (max-width: 600px) {
+  .modalInfoLine {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .emprestimoModalCard {
+    font-size: 0.9rem;
+  }
+}
+
+
 .modalOverlay {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100dvw;
-  height: 100dvh;
-  background-color: rgba(0, 0, 0, 0.6);
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000;
-  padding: 10px;
+  z-index: 9999;
+  overflow-y: auto;
+  padding: 1rem;
 }
 
-.modalCard {
-  background-color: var(--sidebar-bg);
-  border-radius: 10px;
-  width: 100%;
+.modalContent {
+  background: var(--bg-color);
+  color: var(--text-color);
+  border-radius: 16px;
   max-width: 600px;
-  max-height: 90dvh;
-  overflow-y: auto;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
+  width: 100%;
+  padding: 2rem;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.25);
+  position: relative;
+  animation: slideDown 0.3s ease-out;
+  border: 1px solid var(--hover-bg);
+}
+
+.modalClose {
+  position: absolute;
+  top: 16px;
+  right: 20px;
+  background: transparent;
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
+  color: var(--text-color);
+  transition: color 0.2s;
+}
+
+.modalClose:hover {
+  color: #ff4d4f;
 }
 
 .modalTitle {
-  font-size: 1.5rem;
-  text-align: center;
-  margin-bottom: 10px;
+  margin-bottom: 1.5rem;
+  font-size: 1.8rem;
+  color: var(--text-color);
+  border-bottom: 1px solid var(--hover-bg);
+  padding-bottom: 0.5rem;
 }
 
-.modalInfo p {
-  margin: 6px 0;
-  font-size: 1rem;
-}
-
-.modalActions {
+.modalBody {
   display: flex;
-  justify-content: flex-end;
-  gap: 10px;
-  flex-wrap: wrap;
+  flex-direction: column;
+  gap: 1.5rem;
+  max-height: 80vh;
+  overflow-y: auto;
+  padding-right: 0.5rem;
 }
 
-.btnFechar {
-  padding: 8px 12px;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  background-color: #ef4444;
+.modalBody::-webkit-scrollbar {
+  width: 8px;
+}
+.modalBody::-webkit-scrollbar-thumb {
+  background-color: var(--hoverscrollbar-thumb);
+  border-radius: 4px;
+}
+
+.card {
+  background: var(--sidebar-bg);
+  color: var(--text-color);
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  transition: transform 0.2s, background 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  background: var(--hover-bg);
+}
+
+.card input {
+  width: 100%;
+  padding: 0.7rem 1rem;
+  margin: 0.3rem 0 1rem 0;
+  border: 1px solid var(--hover-bg);
+  border-radius: 8px;
+  background: var(--bg-color);
+  color: var(--text-color);
+  font-size: 1rem;
+  transition: border 0.2s, box-shadow 0.2s;
+}
+
+.card input:focus {
+  outline: none;
+  border-color: #4a90e2;
+  box-shadow: 0 0 5px rgba(74,144,226,0.5);
+}
+
+.botaoSalvar {
+  background: #4a90e2;
   color: #fff;
+  padding: 0.7rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background 0.2s;
 }
 
+.botaoSalvar:hover {
+  background: #357ab7;
+}
+
+.textareaObs {
+  width: 100%;
+  min-height: 120px;
+  padding: 12px 14px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  font-size: 15px;
+  font-family: "Segoe UI", Arial, sans-serif;
+  resize: vertical;
+  outline: none;
+  transition: all 0.3s ease;
+  background-color: #f9f9f9;
+}
+
+.textareaObs:focus {
+  border-color: #4a90e2;
+  background-color: #fff;
+  box-shadow: 0 0 6px rgba(74, 144, 226, 0.3);
+}
+
+.textareaObs::placeholder {
+  color: #999;
+  font-style: italic;
+}
+
+@media (max-width: 768px) {
+  .modalContent {
+    padding: 1.5rem;
+  }
+  .modalTitle {
+    font-size: 1.5rem;
+  }
+  .card {
+    padding: 1rem;
+  }
+}
+
+@keyframes slideDown {
+  from { transform: translateY(-20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.suggestions {
+  border: 1px solid var(--hoverscrollbar-thumb);
+  border-radius: 6px;
+  max-height: 150px;
+  overflow-y: auto;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  background: var(--bg-color);
+  color: var(--text-color);
+  position: absolute;
+  width: 80%;
+  z-index: 100;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.suggestions li {
+  padding: 8px;
+  cursor: pointer;
+}
+
+.suggestions li:hover {
+  background-color: var(--hover-bg);
+}
+
+.suggestionActive {
+  background-color: #007bff;
+  color: white;
+}
 
 /* =======================
    Responsividade
    ======================= */
-@media (max-width: 600px) {
-  .tabela th,
-  .tabela td {
-    font-size: 14px;
-    padding: 12px;
-  }
-  .inputBusca {
-    font-size: 0.9rem;
-    padding: 6px;
-  }
-  .botaoNovo {
-    font-size: 0.8rem;
-    padding: 6px;
-  }
-  .modalCard {
-    padding: 10px;
-  }
-  .modalTitle {
-    font-size: 1.2rem;
-  }
-  .modalInfo p {
-    font-size: 0.9rem;
-  }
-  .modalSearchInputId,
-  .modalSearchInputDate {
-    padding: 6px;
-  }
-  .modalTabela th,
-  .modalTabela td {
-    padding: 6px;
-    font-size: 0.8rem;
-  }
-  .btnLimpar,
-  .btnFechar {
-    padding: 6px 8px;
-    font-size: 0.8rem;
-  }
-}
+
 
 /* Hover effects */
 @media (hover: hover) and (pointer: fine) {

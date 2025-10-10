@@ -104,6 +104,139 @@
   background: #444;
 }
 
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1001;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.modalContent {
+  background: var(--bg-color);
+  border-radius: 16px;
+  padding: 25px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 0.3s ease;
+  text-align: center;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.modalTitle {
+  font-size: 1.3rem;
+  margin-bottom: 15px;
+  color: var(--text-color);
+}
+
+.modalInput {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  outline: none;
+  transition: border 0.3s;
+}
+
+.modalInput:focus {
+  border-color: #007bff;
+}
+
+.modalButtons {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.modalBtn {
+  flex: 1;
+  min-width: 100px;
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.modalBtn.add {
+  background: #28a745;
+  color: white;
+}
+
+.modalBtn.add:hover {
+  background: #218838;
+}
+
+.modalBtn.remove {
+  background: #dc3545;
+  color: white;
+}
+
+.modalBtn.remove:hover {
+  background: #c82333;
+}
+
+.modalBtn.cancel {
+  background: #6c757d;
+  color: white;
+}
+
+.modalBtn.cancel:hover {
+  background: #5a6268;
+}
+
+.modalText{
+  font-size: 1rem;
+  color: var(--text-color);
+  margin: 8px 0;
+}
+
+.modalTextultimo{
+  font-size: 1rem;
+  color: var(--text-color);
+  margin: 8px 0px 20px 0;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@media (max-width: 500px) {
+  .modalContent {
+    padding: 20px;
+    max-width: 100%;
+    max-height: 95vh;
+  }
+
+  .modalButtons {
+    flex-direction: column;
+  }
+
+  .modalBtn {
+    width: 100%;
+  }
+}
+
+
 /* =======================
    Responsividade para telas menores
    ======================= */

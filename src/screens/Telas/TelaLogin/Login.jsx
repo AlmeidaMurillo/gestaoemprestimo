@@ -16,6 +16,7 @@ export default function Login() {
 
   const handleLogin = async (e) => {
     e.preventDefault();
+
     try {
       const response = await fetch(`${API_URL}/login`, {
         method: "POST",
@@ -26,15 +27,15 @@ export default function Login() {
       const data = await response.json();
 
       if (response.ok && data.token) {
-        localStorage.setItem("token", data.token); 
-        localStorage.setItem("tipoUsuario", "admin");
-        navigate("/dashboard"); 
+        localStorage.setItem("token", data.token);
+        if (data.tipoUsuario) localStorage.setItem("tipoUsuario", data.tipoUsuario);
+        navigate("/dashboard");
       } else {
         setErro(data.error || "Usuário ou senha incorretos.");
         setTimeout(() => setErro(""), 3000);
       }
-    } catch (err) {
-      setErro("Erro ao conectar com o servidor.", err);
+    } catch {
+      setErro("Erro ao conectar com o servidor.");
       setTimeout(() => setErro(""), 3000);
     }
   };
@@ -56,7 +57,7 @@ export default function Login() {
     >
       <div className={styles.loginBox}>
         <h1 className={styles.title}>MultiAlmeida</h1>
-        <h2 className={styles.soubtitle}>Gestão Empréstimos</h2>
+        <h2 className={styles.subtitle}>Gestão Empréstimos</h2>
         <p className={styles.subtitle}>
           Entre com seus dados para acessar o sistema
         </p>

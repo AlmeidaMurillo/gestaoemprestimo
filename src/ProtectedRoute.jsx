@@ -13,7 +13,7 @@ export default function ProtectedRoute({ children }) {
       }
 
       try {
-        const res = await fetch("http://localhost:5000/validar-token", {
+        const res = await fetch("https://gback.cloudx.work/validar-token", {
           headers: { Authorization: `Bearer ${token}` },
         });
         const data = await res.json();

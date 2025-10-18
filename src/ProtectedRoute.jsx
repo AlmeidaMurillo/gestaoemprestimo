@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
+import API_URL from "./api"
 
 export default function ProtectedRoute({ children }) {
   const [autorizado, setAutorizado] = useState(null);
@@ -13,7 +14,7 @@ export default function ProtectedRoute({ children }) {
       }
 
       try {
-        const res = await fetch("https://gback.cloudx.work/validar-token", {
+        const res = await fetch(`${API_URL}/validar-token`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         const data = await res.json();

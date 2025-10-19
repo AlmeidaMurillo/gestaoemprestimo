@@ -7,7 +7,7 @@ export default function ProtectedRoute({ children }) {
 
   useEffect(() => {
     const validarToken = async () => {
-      const token = localStorage.getItem("token");
+      const token = localStorage.getItem("token")?.trim();
       if (!token) {
         setAutorizado(false);
         return;
@@ -15,9 +15,13 @@ export default function ProtectedRoute({ children }) {
 
       try {
         const res = await fetch(`${API_URL}/validar-token`, {
-          headers: { Authorization: `Bearer ${token}` },
+          headers: {
+            "Authorization": `Bearer ${token}`,
+            "Content-Type": "application/json"
+          },
         });
         const data = await res.json();
+        console.log("Resposta do backend:", data);
         setAutorizado(data.valido);
         if (!data.valido) localStorage.removeItem("token");
       } catch {

@@ -15,6 +15,7 @@ export default function ProtectedRoute({ children }) {
 
       try {
         const res = await fetch(`${API_URL}/validar-token`, {
+          method: "GET",
           headers: {
             "Authorization": `Bearer ${token}`,
             "Content-Type": "application/json"

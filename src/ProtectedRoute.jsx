@@ -8,7 +8,6 @@ export default function ProtectedRoute({ children }) {
   useEffect(() => {
     const validarToken = async () => {
       const token = localStorage.getItem("token")?.trim();
-      console.log("Token do localStorage:", token);
 
       if (!token) {
         setAutorizado(false);
@@ -24,10 +23,8 @@ export default function ProtectedRoute({ children }) {
           },
         });
 
-        console.log("Status da resposta:", res.status);
 
         const data = await res.json();
-        console.log("Resposta do backend:", data);
 
         setAutorizado(data.valido);
         if (!data.valido) {

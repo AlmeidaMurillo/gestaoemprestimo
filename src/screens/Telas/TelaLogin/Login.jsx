@@ -28,7 +28,7 @@ export default function Login() {
 
       if (response.ok && data.token) {
         localStorage.setItem("token", data.token);
-        if (data.tipoUsuario) localStorage.setItem("tipoUsuario", data.tipoUsuario);
+        localStorage.setItem("tipoUsuario", "admin");
         navigate("/dashboard");
       } else {
         setErro(data.error || "Usuário ou senha incorretos.");
